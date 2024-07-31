@@ -1,0 +1,136 @@
+import tkinter as tk
+from tkinter import messagebox
+import time
+
+# Definisikan data kamar
+rooms = {
+    'M': ('Melati', 650000),
+    'S': ('Sakura', 550000),
+    'L': ('Lily', 400000),
+    'A': ('Anggrek', 350000),
+}
+
+# Fungsi untuk menghitung total biaya
+def calculate_total():
+    try:
+        days = int(entry_days.get())
+        room_code = entry_room_code.get().upper()
+        amount_paid = int(entry_amount_paid.get())
+        if room_code not in rooms:
+            messagebox.showerror("Error", "Kode kamar tidak valid")
+            return
+
+        room_name, price_per_night = rooms[room_code]
+
+        # Hitung total biaya
+        total_cost = days * price_per_night
+
+        # Terapkan diskon
+        if days > 5:
+            discount = 0.10
+        elif days > 3:
+            discount = 0.05
+        else:
+            discount = 0
+
+        total_cost_with_discount = total_cost * (1 - discount)
+
+        # Hitung PPN
+        ppn = 0.1 * total_cost_with_discount
+
+        # Jumlah akhir yang harus dibayar
+        final_amount = total_cost_with_discount + ppn
+
+        # Hitung kembalian
+        change = amount_paid - final_amount
+
+        # Tampilkan hasil
+        result_text = (
+            f"Hotel 'SEJUK ASRI'\n"
+            f"===================\n"
+            f"Nama Petugas: {entry_petugas.get()}\n"
+            f"Nama Customer: {entry_customer.get()}\n"
+            f"Tanggal Check In: {entry_checkin.get()}\n"
+            f"Nama Kamar: {room_name}\n"
+            f"Lama Sewa: {days} hari\n"
+            f"Harga Sewa per Malam: Rp. {price_per_night:.2f}\n"
+            f"Diskon: {discount*100:.2f}%\n"
+            f"PPN: Rp. {ppn:.2f}\n"
+            f"Total Bayar: Rp. {final_amount:.2f}\n"
+            f"Uang Bayar: Rp. {amount_paid:.2f}\n"
+            f"Uang Kembali: Rp. {change:.2f}\n"
+        )
+        label_result.config(text=result_text)
+    except ValueError:
+        messagebox.showerror("Error", "Masukkan jumlah hari dan jumlah uang bayar yang valid")
+
+# Fungsi untuk menghapus semua input dan hasil
+def clear_all():
+    entry_petugas.delete(0, tk.END)
+    entry_customer.delete(0, tk.END)
+    entry_checkin.delete(0, tk.END)
+    entry_room_code.delete(0, tk.END)
+    entry_days.delete(0, tk.END)
+    entry_amount_paid.delete(0, tk.END)
+    label_result.config(text="")
+
+# Fungsi untuk menghentikan sementara program
+def pause_program():
+    messagebox.showinfo("Pause", "Program dihentikan sementara.")
+
+# Fungsi untuk memperbarui waktu
+def update_time():
+    current_time = time.strftime("%H:%M:%S %p")
+    current_date = time.strftime("%A, %d %B %Y")
+    label_time.config(text=f"Waktu: {current_time}\nTanggal: {current_date}")
+    root.after(1000, update_time)  # Perbarui setiap 1 detik
+
+# Buat jendela utama
+root = tk.Tk()
+root.title("Hotel Sejuk Asri - Pembayaran")
+root.configure(bg="#1a237e")
+
+# Buat dan tempatkan widget
+tk.Label(root, text="Hotel Sejuk Asri", bg="#1a237e", fg="#ffffff", font=("Helvetica", 16, "bold")).grid(row=0, column=0, columnspan=2, pady=10)
+
+tk.Label(root, text="Nama Petugas:", bg="#1a237e", fg="#ffffff").grid(row=1, column=0, sticky="w", padx=10, pady=5)
+entry_petugas = tk.Entry(root, bg="#ffffff", fg="#1a237e")
+entry_petugas.grid(row=1, column=1, padx=10, pady=5)
+
+tk.Label(root, text="Nama Customer:", bg="#1a237e", fg="#ffffff").grid(row=2, column=0, sticky="w", padx=10, pady=5)
+entry_customer = tk.Entry(root, bg="#ffffff", fg="#1a237e")
+entry_customer.grid(row=2, column=1, padx=10, pady=5)
+
+tk.Label(root, text="Tanggal Check-in ", bg="#1a237e", fg="#ffffff").grid(row=3, column=0, sticky="w", padx=10, pady=5)
+entry_checkin = tk.Entry(root, bg="#ffffff", fg="#1a237e")
+entry_checkin.grid(row=3, column=1, padx=10, pady=5)
+
+tk.Label(root, text="Kode Kamar:", bg="#1a237e", fg="#ffffff").grid(row=4, column=0, sticky="w", padx=10, pady=5)
+entry_room_code = tk.Entry(root, bg="#ffffff", fg="#1a237e")
+entry_room_code.grid(row=4, column=1, padx=10, pady=5)
+
+tk.Label(root, text="Lama Sewa (hari):", bg="#1a237e", fg="#ffffff").grid(row=5, column=0, sticky="w", padx=10, pady=5)
+entry_days = tk.Entry(root, bg="#ffffff", fg="#1a237e")
+entry_days.grid(row=5, column=1, padx=10, pady=5)
+
+tk.Label(root, text="Uang Bayar:", bg="#1a237e", fg="#ffffff").grid(row=6, column=0, sticky="w", padx=10, pady=5)
+entry_amount_paid = tk.Entry(root, bg="#ffffff", fg="#1a237e")
+entry_amount_paid.grid(row=6, column=1, padx=10, pady=5)
+
+tk.Button(root, text="Hitung Pembayaran", command=calculate_total, bg="#3949ab", fg="#ffffff").grid(row=7, column=0, columnspan=2, padx=10, pady=10)
+
+label_result = tk.Label(root, text="", justify=tk.LEFT, bg="#1a237e", fg="#ffffff", font=("Helvetica", 10, "bold"))
+label_result.grid(row=8, column=0, columnspan=2, padx=10, pady=10)
+
+tk.Button(root, text="Clear", command=clear_all, bg="#d32f2f", fg="#ffffff").grid(row=9, column=0, padx=10, pady=10)
+tk.Button(root, text="Pause", command=pause_program, bg="#1976d2", fg="#ffffff").grid(row=9, column=1, padx=10, pady=10)
+
+# Label untuk menampilkan waktu dan tanggal
+label_time = tk.Label(root, text="", bg="#1a237e", fg="#ffffff", font=("Helvetica", 12, "bold"))
+label_time.grid(row=10, column=0, columnspan=2, padx=10, pady=10)
+
+# Panggil fungsi update_time untuk pertama kali
+update_time()
+
+# Jalankan event loop utama
+root.mainloop()
