@@ -1,0 +1,147 @@
+def luas_persegi_panjang(panjang, lebar):
+  """
+  Menghitung luas persegi panjang.
+
+  Args:
+    panjang: Panjang persegi panjang.
+    lebar: Lebar persegi panjang.
+
+  Returns:
+    Luas persegi panjang.
+  """
+  return panjang * lebar
+
+def keliling_persegi_panjang(panjang, lebar):
+  """
+  Menghitung keliling persegi panjang.
+
+  Args:
+    panjang: Panjang persegi panjang.
+    lebar: Lebar persegi panjang.
+
+  Returns:
+    Keliling persegi panjang.
+  """
+  return 2 * (panjang + lebar)
+
+def luas_persegi(sisi):
+  """
+  Menghitung luas persegi.
+
+  Args:
+    sisi: Panjang sisi persegi.
+
+  Returns:
+    Luas persegi.
+  """
+  return sisi * sisi
+
+def keliling_persegi(sisi):
+  """
+  Menghitung keliling persegi.
+
+  Args:
+    sisi: Panjang sisi persegi.
+
+  Returns:
+    Keliling persegi.
+  """
+  return 4 * sisi
+
+def luas_segitiga(alas, tinggi):
+  """
+  Menghitung luas segitiga.
+
+  Args:
+    alas: Panjang alas segitiga.
+    tinggi: Tinggi segitiga.
+
+  Returns:
+    Luas segitiga.
+  """
+  return 0.5 * alas * tinggi
+
+def keliling_segitiga(sisi1, sisi2, sisi3):
+  """
+  Menghitung keliling segitiga.
+
+  Args:
+    sisi1: Panjang sisi pertama segitiga.
+    sisi2: Panjang sisi kedua segitiga.
+    sisi3: Panjang sisi ketiga segitiga.
+
+  Returns:
+    Keliling segitiga.
+  """
+  return sisi1 + sisi2 + sisi3
+
+def luas_lingkaran(jari_jari):
+  """
+  Menghitung luas lingkaran.
+
+  Args:
+    jari_jari: Jari-jari lingkaran.
+
+  Returns:
+    Luas lingkaran.
+  """
+  return 3.14159 * jari_jari * jari_jari
+
+def keliling_lingkaran(jari_jari):
+  """
+  Menghitung keliling lingkaran.
+
+  Args:
+    jari_jari: Jari-jari lingkaran.
+
+  Returns:
+    Keliling lingkaran.
+  """
+  return 2 * 3.14159 * jari_jari
+
+def main():
+  """
+  Fungsi utama untuk menjalankan program.
+  """
+
+  while True:
+    print("Pilih bangun datar:")
+    print("1. Persegi Panjang")
+    print("2. Persegi")
+    print("3. Segitiga")
+    print("4. Lingkaran")
+    print("5. Keluar")
+
+    pilihan = input("Masukkan pilihan Anda: ")
+
+    if pilihan == "1":
+      panjang = float(input("Masukkan panjang: "))
+      lebar = float(input("Masukkan lebar: "))
+      luas = luas_persegi_panjang(panjang, lebar)
+      keliling = keliling_persegi_panjang(panjang, lebar)
+      print(f"Luas persegi panjang: {luas}")
+      print(f"Keliling persegi panjang: {keliling}")
+    elif pilihan == "2":
+      sisi = float(input("Masukkan sisi: "))
+      luas = luas_persegi(sisi)
+      keliling = keliling_persegi(sisi)
+      print(f"Luas persegi: {luas}")
+      print(f"Keliling persegi: {keliling}")
+    elif pilihan == "3":
+      alas = float(input("Masukkan alas: "))
+      tinggi = float(input("Masukkan tinggi: "))
+      luas = luas_segitiga(alas, tinggi)
+      print(f"Luas segitiga: {luas}")
+    elif pilihan == "4":
+      jari_jari = float(input("Masukkan jari-jari: "))
+      luas = luas_lingkaran(jari_jari)
+      keliling = keliling_lingkaran(jari_jari)
+      print(f"Luas lingkaran: {luas}")
+      print(f"Keliling lingkaran: {keliling}")
+    elif pilihan == "5":
+      break
+    else:
+      print("Pilihan tidak valid.")
+
+if __name__ == "__main__":
+  main()
